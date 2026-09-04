@@ -1,39 +1,95 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<div align="center">
 
-## Getting Started
+# 🚀 Group Portfolio & Task Submission Website 
+*A simple Next.js based website for portfolio and group task submission for the UI/UX Design course.*
 
-First, run the development server:
+[![Next.js](https://img.shields.io/badge/Next.js-black?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38BDF8?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+</div>
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📖 About Project
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This project is both a portfolio website and a group task submission system designed specifically to streamline task coordination. The website categorizes submissions into two main domains industrial and educational and features a centralized member profile page for easy access to team information.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## ✨ Key Features
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+*   👥 **Group Member Profiles:** Displays comprehensive profiles of each group member.
+*   🏭 **Industrial Domain Task Submission:** Dedicated pages to manage, view, and submit assignments related to industrial case studies.
+*   🎓 **Educational Domain Task Submission:** Dedicated pages for managing assignments focusing on the educational sector.
+*   ⚡ **Interactive & Responsive:** Built with dynamic modular components utilizing *modals* and the *Context API*.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 🛠️ Technologies Used
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+*   **Framework :** [Next.js (App Router)](https://nextjs.org/)
+*   **UI Library / Styling :** Tailwind CSS
+*   **Language :** TypeScript / JavaScript
+*   **State Management :** React Context (`AppContext`)
+*   **Public Repository :** GitHub
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
 
-# website-portofolio-ui-ux-design
-Website sederhana yang digunakan untuk mengumpulkan tugas tugas dari matakuliah UI/UX Design dan dibangun di framework Next.js
+## 🚀 How to Run the Project
+
+Follow the steps below to download and run this project locally on your computer
+
+### 📋 Prerequisites 
+Ensure your computer has the following software installed:
+* Node.js (Version 18.x or newer is recommended)
+* Git
+
+### ⚙️ Installation Steps
+
+1. **Clone this repository :**
+  ```bash
+  git clone https://github.com/Abraham-Miko/website-portofolio-ui-ux-design.git
+  ```
+2. **Navigate to the project directory :**
+  ```bash
+  cd website-portofolio-ui-ux-design
+  ```
+3. **Install the required dependencies/packages :**
+  ```bash
+  npm install
+  ```
+4. **Run the development server :**
+  ```bash
+  npm run dev
+  ```
+5. **Open in your Browser :**
+  ```bash
+  http://localhost:3000
+  ```
+---
+
+## 📂 Project Structure
+
+```text
+website-portofolio-ui-ux-design/
+├── app/
+│   ├── components/
+│   │   ├── LayoutWrapper.tsx
+│   │   ├── MemberCard.tsx
+│   │   ├── TaskCard.tsx
+│   │   └── TaskModal.tsx
+│   ├── context/
+│   │   └── AppContext.tsx
+│   ├── industri/
+│   │   └── page.tsx
+│   ├── pendidikan/
+│   │   └── page.tsx
+│   ├── globals.css
+│   ├── layout.tsx
+│   └── page.tsx
+├── types/
+│   └── index.ts
+├── package.json
+└── tsconfig.json
