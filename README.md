@@ -43,7 +43,8 @@ Follow the steps below to download and run this project locally on your computer
 
 ### 📋 Prerequisites 
 Ensure your computer has the following software installed:
-* Node.js (Version 18.x or newer is recommended)
+* Node.js (Version 20.9 or newer is recommended)
+* Operating systems: macOS, Windows (including WSL), or Linux
 * Git
 
 ### ⚙️ Installation Steps
