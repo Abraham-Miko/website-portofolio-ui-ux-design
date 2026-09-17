@@ -1,79 +1,117 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, Users, Briefcase, BookOpen, X } from 'lucide-react';
+import { Menu, Users, Briefcase, BookOpen, X, Sparkles, Home } from 'lucide-react';
 
 export default function LayoutWrapper({ children }: { children: React.ReactNode }) {
-  const [isOpen, setIsOpen] = useState(true);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
 
+  // Cek apakah rute saat ini adalah halaman welcome
+  const isWelcomePage = pathname === '/';
+
+  // Efek scroll untuk header transparan mewah
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const navItems = [
-    { name: 'Data Anggota', href: '/', icon: Users },
-    { name: 'Tugas Industri', href: '/industri', icon: Briefcase },
+    { name: 'Data Anggota', href: '/profil', icon: Users },
+    { name: 'Tugas Industri', href: '/industri', icon: Briefcase   },
     { name: 'Tugas Pendidikan', href: '/pendidikan', icon: BookOpen },
   ];
 
   return (
-    <div className="flex min-h-screen bg-slate-50">
-      {/* Sidebar Mobile Overlay */}
-      {!isOpen && (
-        <div 
-          className="fixed inset-0 bg-black/50 z-40 lg:hidden" 
-          onClick={() => setIsOpen(true)} 
-        />
-      )}
+    /* Latar belakang otomatis berubah jika di halaman welcome, selain itu tetap bg-zinc-50 */
+    <div className={`min-h-screen font-sans flex flex-col transition-colors duration-300 ${isWelcomePage ? 'bg-zinc-950 text-white' : 'bg-zinc-50 text-zinc-900'}`}>
+      
+      {/* Definisi Style Animasi Masuk Lebih Lama & Mulus */}
+      <style jsx global>{`
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(35px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .animate-fade-in-up {
+          animation: fadeInUp 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+      `}</style>
 
-      {/* Sidebar */}
-      <aside 
-        className={`fixed top-0 left-0 h-screen bg-indigo-900 text-white transition-all duration-300 z-50 flex flex-col
-          ${isOpen ? 'w-64 translate-x-0' : '-translate-x-full w-64 lg:translate-x-0 lg:w-20'}`}
-      >
-        <div className="flex items-center justify-between p-4 h-16 border-b border-indigo-800">
-          <span className={`font-bold text-lg whitespace-nowrap ${!isOpen && 'lg:hidden'}`}>
-            Kelompok 8
-          </span>
-          <button onClick={() => setIsOpen(!isOpen)} className="p-1 hover:bg-indigo-800 rounded lg:hidden">
-            <X size={20} />
+      {/* Top Navbar */}
+      <header className={`sticky top-0 z-50 transition-all duration-300 border-b 
+        ${scrolled ? 'bg-zinc-950/90 backdrop-blur-md border-zinc-800 shadow-xl' : 'bg-zinc-950 border-zinc-900'}`}>
+        <div className="max-w-7xl mx-auto px-12 h-20 flex items-center justify-between">
+          
+          {/* Logo / Brand */}
+          <Link href="/" className="flex items-center gap-2 font-bold text-lg text-white group">
+            <Sparkles className="text-amber-500 hover:rotate-90 transition-transform duration-300" size={20} />
+            <span>UI/UX DESIGN</span>
+          </Link>
+
+          {/* Navigasi Desktop */}
+          <nav className="hidden md:flex items-center gap-2">
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = pathname === item.href;
+              return (
+                <Link key={item.href} href={item.href}>
+                  <div className={`flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all duration-300 text-sm font-medium
+                    ${isActive 
+                      ? 'bg-zinc-900 text-amber-500 shadow-inner border border-zinc-800' 
+                      : 'text-zinc-400 hover:text-white hover:bg-zinc-950/50'}`}
+                  >
+                    <Icon size={18} strokeWidth={isActive ? 2.5 : 1.5} className={isActive ? 'text-amber-500' : 'text-zinc-400'} />
+                    <span>{item.name}</span>
+                  </div>
+                </Link>
+              );
+            })}
+          </nav>
+
+          {/* Tombol Menu Mobile */}
+          <button 
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)} 
+            className="p-2.5 rounded-xl bg-zinc-900 text-zinc-300 hover:text-white md:hidden transition-colors border border-zinc-800"
+          >
+            {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
-        
-        <nav className="flex-1 p-4 space-y-2">
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            const isActive = pathname === item.href;
-            return (
-              <Link key={item.href} href={item.href}>
-                <div className={`flex items-center gap-3 p-3 rounded-lg transition-colors overflow-hidden whitespace-nowrap
-                  ${isActive ? 'bg-indigo-700 text-white' : 'text-indigo-200 hover:bg-indigo-800 hover:text-white'}`}
-                >
-                  <Icon size={20} className="shrink-0" />
-                  <span className={`${!isOpen && 'lg:hidden'}`}>{item.name}</span>
-                </div>
-              </Link>
-            );
-          })}
-        </nav>
-      </aside>
 
-      {/* Main Content */}
-      <div className={`flex-1 transition-all duration-300 ${isOpen ? 'lg:ml-64' : 'lg:ml-20'}`}>
-        <header className="bg-white shadow-sm h-16 flex items-center px-4 sticky top-0 z-30">
-          <button 
-            onClick={() => setIsOpen(!isOpen)} 
-            className="p-2 mr-4 rounded-md hover:bg-slate-100 text-slate-600"
-          >
-            <Menu size={24} />
-          </button>
-          <h1 className="font-semibold text-slate-800 capitalize">
-            {pathname === '/' ? 'Data Anggota' : pathname.replace('/', 'Tugas ')}
-          </h1>
-        </header>
-        <main className="p-6 max-w-7xl mx-auto">
-          {children}
-        </main>
-      </div>
+        {/* Dropdown Menu Mobile */}
+        {mobileMenuOpen && (
+          <div className="md:hidden bg-zinc-950 border-b border-zinc-800 px-6 py-4 space-y-2 animate-in slide-in-from-top duration-300">
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = pathname === item.href;
+              return (
+                <Link key={item.href} href={item.href} onClick={() => setMobileMenuOpen(false)}>
+                  <div className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-sm font-medium
+                    ${isActive ? 'bg-zinc-900 text-amber-500' : 'text-zinc-400 hover:bg-zinc-900/50 hover:text-white'}`}
+                  >
+                    <Icon size={18} />
+                    <span>{item.name}</span>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        )}
+      </header>
+
+      {/* Main Content dengan Kelas Animasi 'animate-fade-in-up' */}
+      <main className="flex-1 pt-12 md:pt-24 px-6 md:px-10 pb-10 max-w-7xl w-full mx-auto animate-fade-in-up">
+        {children}
+      </main>
     </div>
   );
 }

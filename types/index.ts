@@ -5,7 +5,6 @@ export interface Task {
   platform: string;
   url: string;
   deadline: string;
-  category: 'industri' | 'pendidikan';
 }
 
 export interface Member {
@@ -14,5 +13,5 @@ export interface Member {
   nim: string;
   role: string;
   prodi: string;
-  social: string;
+  imageUrl?: string;
 }
